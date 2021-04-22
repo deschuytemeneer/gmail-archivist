@@ -1,0 +1,10 @@
+{
+  "name": "gmail-filter-manager",
+  "version": "0.0.1",
+  "author": "Kenny Deschuyteneer (kenny.deschuyteneer@gmail.com)",
+  "license": "MIT",
+  "description": "A Google addon to get control over your gmail filters.",
+  "devDependencies": {
+    "@types/google-apps-script": "^1.0.31"
+  }
+}
