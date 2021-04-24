@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/appsscript.addOns.drive.schema.json",
+  "type": "object",
+  "description": "The resource configuration that is used to define Google Workspace add-on content and behavior within the editors. Google Workspace add-on manifests must have all the components marked as Required if they extend Gmail.",
+  "definitions": {
+    "HomepageTrigger": {
+      "$ref": "./appsscript.addOns.common.schema.json/#/definitions/HomepageTrigger"
+    }
+  },
+  "properties": {
+    "authorizationCheckFunction": {
+      "type": "string",
+      "description": "Deprecated. The name of an Apps Script function that performs third-party authorization requirement checks. This function is called before each invocation of the Google Workspace add-on.\n\nThis function was deprecated to avoid unnecessary execution latency. Instead, the add-on should throw an exception from the main invocation, as shown here: https://developers.google.com/workspace/add-ons/how-tos/non-google-services#non-google_oauth_configuration_example"
+    },
+    "composeTrigger": {
+      "type": "object",
+      "description": "Required for compose actions. Defines the set of UIs available to the user while composing an email.\nSee https://developers.google.com/workspace/add-ons/gmail/extending-compose-ui for details.",
+      "properties": {
+        "draftAccess": {
+          "enum": [
+            "NONE",
+            "METADATA"
+          ],
+          "default": "NONE",
+          "description": "Defines the level of data access available to a compose trigger function. Valid options are the following:\nNONE, the default setting. This causes the event object passed to the compose trigger function to be mostly empty.\nMETADATA, which populates the event object passed to the compose trigger function with lists of recipients of the message. This setting requires that the add-on include the gmail.addons.current.message.metadata scope."
+        },
+        "selectActions": {
+          "type": "array",
+          "description": "A list of compose actions that create compose UIs; however, this list is limited to a single action per add-on. The compose action has a corresponding icon presented in the Gmail compose window. The icon is specified by gmail.logoUrl.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "runFunction": {
+                "type": "string",
+                "description": "Required for compose actions. The name of the Apps Script function that executes when this compose action is selected. This compose trigger function builds the add-on compose UI.\nSee Compose trigger function for details."
+              },
+              "text": {
+                "type": "string",
+                "description": "Required for compose actions. A short text description of this compose action."
+              }
+            },
+            "required": [
+              "runFunction",
+              "text"
+            ]
+          }
+        }
+      }
+    },
+    "contextualTriggers": {
+      "type": "array",
+      "description": "Required. A list of triggers that fire when a message is opened in Gmail. When the trigger fires, it executes a specific Apps Script function, usually to create new cards and update the UI.\n\nNote: Currently the only available criteria is unconditional, meaning the trigger fires for every opened Gmail message.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "onTriggerFunction": {
+            "type": "string",
+            "description": "Required for each contextual trigger. The name of the Apps Script function that executes when the trigger fires.\n\nSee https://developers.google.com/workspace/add-ons/gmail/extending-message-ui#contextual_trigger_function for details on how to define this function."
+          },
+          "unconditional": {
+            "type": "object",
+            "description": "Required for each contextual trigger. Used to specify that the contextual trigger activates for all Gmail messages when they are opened. This is currently the only option, so this should always be an empty object.",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "homepageTrigger": {
+      "$ref": "#/definitions/HomepageTrigger",
+      "description": "The trigger function specification for creating the add-on homepage in the Drive host. This overrides addOns.common.homepageTrigger."
+    }
+  }
+}

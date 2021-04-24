@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/appsscript.addOns.calendar.schema.json",
+  "type": "object",
+  "description": "The resource configuration that is used to define Google Workspace add-on content and behavior within Google Calendar. Google Workspaceadd-on manifests must have all the components marked as Required if they extend Calendar.",
+  "definitions": {
+    "HomepageTrigger": {
+      "$ref": "./appsscript.addOns.common.schema.json/#/definitions/HomepageTrigger"
+    }
+  },
+  "properties": {
+    "createSettingsUrlFunction": {
+      "type": "string",
+      "description": "Only used if the add-on provides conferencing solutions. Optional. The name of the Apps Script function that generates a URL leading to a settings page for the add-on. For more information, see https://developers.google.com/workspace/add-ons/calendar/conferencing/add-settings."
+    },
+    "conferenceSolution": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Required. An identifier for the conferencing solution. Must be unique in the add-on's set of provided conference solutions. Once an ID is chosen, it shouldn't be changed."
+          },
+          "logoUrl": {
+            "type": "string",
+            "description": "A link to the icon representing the solution. The image should be sized to 96 x 96 dp.\nThis cannot be an arbitrary URL—the image must be hosted on Google's infrastructure. See https://developers.google.com/workspace/add-ons/calendar/conferencing/providing-logos for details.\nIf provided, this image may be distinct from the add-on calendar.logoUrl, which the image used to represent the add-on in the host applications it extends. If a logo image is not provided for a specific solution, calendar.logoUrl is used instead."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the conferencing solution shown in the Google Calendar UI when a user creates or edits an event."
+          },
+          "onCreateFunction": {
+            "type": "string",
+            "description": "Required. The name of the Apps Script function called when Google Calendar attempts to create this type of conference. You must implement this function for each conference solution your add-on supports."
+          }
+        },
+        "required": ["id", "name", "onCreateFunction"]
+      }
+    },
+    "currentEventAccess": {
+      "enum": [
+        "METADATA",
+        "READ",
+        "WRITE",
+        "READ_WRITE "
+      ],
+      "description": "Determines what level of access the add-on has to user-generated data event data. If not provided, no event metadata is passed to the add-on. The valid settings are the following:\nMETADATA indicates that the add-on only has access to basic event metadata.\nREAD indicates that the add-on can read user-generated event data in addition to the basic event metadata.\nWRITE indicates that the add-on can write user-generated event data.\nREAD_WRITE indicates that the add-on can read and write user-generated event data, as well as reading basic metadata.\nIf set to READ or READ_WRITE, the add-on must have the https://www.googleapis.com/auth/calendar.addons.current.event.read scope.\nIf set to WRITE or READ_WRITE, the add-on must have the https://www.googleapis.com/auth/calendar.addons.current.event.write scope."
+    },
+    "eventOpenTrigger": {
+      "type": "object",
+      "description": "A configuration for a contextual trigger that fires when a Google Calendar event is opened by the user. See https://developers.google.com/workspace/add-ons/calendar/building-calendar-interfaces#extending_the_calendar_event_interface for more information.",
+      "properties": {
+        "runFunction": {
+          "type": "string",
+          "description": "The name of the Apps Script function that runs when a user opens a Calendar event for viewing or editing. If specified, you must implement this function to build and return an array of Card objects for display in the add-on UI."
+        }
+      },
+      "required": ["runFunction"]
+    },
+    "eventUpdateTrigger": {
+      "type": "object",
+      "description": "A configuration for a contextual trigger that fires when a Google Calendar event is edited and saved by the user. See https://developers.google.com/workspace/add-ons/calendar/building-calendar-interfaces#updating_calendar_events for more information.",
+      "properties": {
+        "runFunction": {
+          "type": "string",
+          "description": "The name of the Apps Script function that runs when a user edits and saves a Calendar event. If specified, you must implement this function to build and return an array of Card objects for display in the add-on UI."
+        }
+      },
+      "required": ["runFunction"]
+    },
+    "homepageTrigger": {
+      "$ref": "#/definitions/HomepageTrigger",
+      "description": "The trigger function specification for creating the add-on homepage in the Calendar host. This overrides addOns.common.homepageTrigger."
+    }
+  }
+}

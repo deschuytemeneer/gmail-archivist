@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/appsscript.addOns.schema.json",
+  "type": "object",
+  "description": "The resource configuration that is used to define Google Workspace add-on content and behavior. Google Workspace add-on manifests must have all the components marked as Required.",
+  "definitions": {
+    "CommonAddOnConfiguration": {
+      "$ref": "./appsscript.addOns.common.schema.json"
+    },
+    "CalendarAddOnConfiguration": {
+      "$ref": "./appsscript.addOns.calendar.schema.json"
+    },
+    "DriveAddOnConfiguration": {
+      "$ref": "./appsscript.addOns.drive.schema.json"
+    },
+    "GmailAddOnConfiguration": {
+      "$ref": "./appsscript.addOns.gmail.schema.json"
+    },
+    "EditorsAddOnConfiguration": {
+      "$ref": "./appsscript.addOns.editors.schema.json"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "common": {
+      "$ref": "#/definitions/CommonAddOnConfiguration"
+    },
+    "calendar": {
+      "$ref": "#/definitions/CalendarAddOnConfiguration"
+    },
+    "drive": {
+      "$ref": "#/definitions/DriveAddOnConfiguration"
+    },
+    "gmail": {
+      "$ref": "#/definitions/GmailAddOnConfiguration"
+    },
+    "docs": {
+      "$ref": "#/definitions/EditorsAddOnConfiguration"
+    },
+    "sheets": {
+      "$ref": "#/definitions/EditorsAddOnConfiguration"
+    },
+    "slides": {
+      "$ref": "#/definitions/EditorsAddOnConfiguration"
+    }
+  },
+  "required": [
+    "common"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/appsscript.schema.json",
+  "title": "AppsScript",
+  "type": "object",
+  "description": "The manifest of a Google AppsScript",
+  "definitions": {
+    "addOns": {
+      "$ref": "./appsscript.addOns.schema.json"
+    },
+    "dependencies": {
+      "$ref": "./appsscript.dependencies.schema.json"
+    },
+    "timeZone": {
+      "$ref": "./appsscript.timeZone.schema.json"
+    }
+  },
+  "properties": {
+    "addOns": {
+      "$ref": "#/definitions/addOns",
+      "description": "The resource configuration of the project if deployed as a Google Workspace add-on."
+    },
+    "dependencies": {
+      "$ref": "#/definitions/dependencies",
+      "description": "The configuration of advanced services and libraries enabled for use by the script project."
+    },
+    "exceptionLogging": {
+      "enum": [
+        "NONE",
+        "STACKDRIVER"
+      ],
+      "description": "The location where exceptions are logged. The valid settings are the following:\n- NONE indicates exceptions are not logged.\n- STACKDRIVER indicates that exceptions are logged in Stackdriver."
+    },
+    "executionApi": {
+      "type": "object",
+      "description": "The script project's API executable configuration. This is only used if the project is deployed for API execution.",
+      "additionalProperties": false,
+      "properties": {
+        "access": {
+          "enum": [
+            "MYSELF",
+            "DOMAIN",
+            "ANYONE",
+            "ANYONE_ANONYMOUS"
+          ],
+          "description": "Determines who has permission to run the script from the API. The valid settings are the following:\nMYSELF indicates only the user who deployed the script can run it.\nDOMAIN indicates only users in the same domain as the deploying user can run it.\nANYONE indicates any user who is logged in.\nANYONE_ANONYMOUS indicates any user, even if not logged in."
+        }
+      }
+    },
+    "oauthScopes": {
+      "type": "array",
+      "description": "The definition of authorization scopes used by the script project. See https://developers.google.com/apps-script/concepts/scopes.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "runtimeVersion": {
+      "enum": [
+        "STABLE",
+        "V8",
+        "DEPRECATED_ES5"
+      ],
+      "description": "The runtime version the script is using. If this field is not present in the manifest, the script uses the default runtime (STABLE). Valid options for this field are the following:\n- STABLE indicates the default runtime (currently Rhino).\n- V8 indicates the V8 powered runtime.\n- DEPRECATED_ES5 indicates the Rhino runtime. Setting this value also prevents automatic migration to V8."
+    },
+    "sheets": {
+      "type": "object",
+      "description": "The resource configuration that defines Sheets macros.",
+      "additionalProperties": false,
+      "properties": {
+        "macros": {
+          "type": "array",
+          "description": "Required. A list of defined macros and their associated properties.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "defaultShortcut": {
+                "type": "string",
+                "description": "Defines the keyboard shortcut that executes the macro. This must be of the form Ctrl+Alt+Shift+Number, where Number is a single-digit. Macros without shortcuts can only be executed from the Tools > Macros menu."
+              },
+              "functionName": {
+                "type": "string",
+                "description": "Required. The name of the Apps Script function that executes the macro. By default this matches the menuName for functions automatically created, but this is not a requirement."
+              },
+              "menuName": {
+                "type": "string",
+                "description": "Required. The name of the macro as it appears in the Google Sheets UI."
+              }
+            },
+            "required": [
+              "functionName",
+              "menuName"
+            ]
+          }
+        }
+      }
+    },
+    "timeZone": {
+      "$ref": "#/definitions/timeZone"
+    },
+    "urlFetchWhitelist": {
+      "type": "array",
+      "description": "A list of HTTPS URL prefixes. If present, any URL endpoint fetched must match one of the prefixes in this list. This can help to protect user data. See https://developers.google.com/apps-script/manifest#whitelisting_urls for more details.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "webapp": {
+      "type": "object",
+      "description": "The script project's web app configuration, which is only used if the project is deployed as a web app.",
+      "additionalProperties": false,
+      "properties": {
+        "access": {
+          "enum": [
+            "MYSELF",
+            "DOMAIN",
+            "ANYONE",
+            "ANYONE_ANONYMOUS"
+          ],
+          "description": "The levels of permission for running the web app. The valid settings are the following:\nMYSELF indicates only the user who deployed the script can run it.\nDOMAIN indicates only users in the same domain as the deploying user can run it.\nANYONE indicates any user who is logged in.\nANYONE_ANONYMOUS indicates any user, even if not logged in."
+        },
+        "executeAs": {
+          "enum": [
+            "USER_ACCESSING",
+            "USER_DEPLOYING"
+          ],
+          "description": "The identity under which the web app executes. The valid settings are the following:\nUSER_ACCESSING indicates the web app runs as the user accessing it.\nUSER_DEPLOYING indicates the web app runs as the user who deployed it."
+        }
+      }
+    }
+  }
+}

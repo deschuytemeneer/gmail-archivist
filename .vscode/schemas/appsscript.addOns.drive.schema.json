@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/appsscript.addOns.drive.schema.json",
+  "type": "object",
+  "description": "The resource configuration that is used to define Google Workspace add-on content and behavior within Google Drive. Google Workspace add-on manifests must have all the components marked as Required if they extend Drive.",
+  "definitions": {
+    "HomepageTrigger": {
+      "$ref": "./appsscript.addOns.common.schema.json/#/definitions/HomepageTrigger"
+    }
+  },
+  "properties": {
+    "onItemsSelectedTrigger": {
+      "type": "object",
+      "description": "A configuration for a contextual trigger that fires when a user selects one or more files or folders in Google Drive. See Drive contextual interface for items selected for more information.",
+      "properties": {
+        "runFunction": {
+          "type": "string",
+          "description": "The name of the function to run when files or folders are selected in Google Drive. If specified, you must implement this function to build and return an array of Card objects for display in the add-on UI."
+        }
+      },
+      "required": ["runFunction"]
+    },
+    "homepageTrigger": {
+      "$ref": "#/definitions/HomepageTrigger",
+      "description": "The trigger function specification for creating the add-on homepage in the Drive host. This overrides addOns.common.homepageTrigger."
+    }
+  }
+}
