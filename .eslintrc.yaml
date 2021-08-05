@@ -1,0 +1,22 @@
+---
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: 'tsconfig.json'
+
+plugins:
+  - '@typescript-eslint'
+extends:
+  - 'eslint:recommended'
+  - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
+  - 'prettier'
+
+rules:
+  # Disable this rule as every function and variable is declared in a 'global' scope, and we don't
+  # really have a straight forward way to determine which functions and variables are actually used.
+  # Hence why we just disable it.
+  '@typescript-eslint/no-unused-vars': 0
+
+  # As everything is globally scoped in google apps scripts, namespaces are actually a better way to
+  # organize the different bits of our application.
+  '@typescript-eslint/no-namespace': 0
