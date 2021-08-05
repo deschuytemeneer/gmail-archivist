@@ -1,45 +1,68 @@
 namespace GmailAutoArchiver {
+  export interface FilterRecord {
+    name: string;
+    markAsImportant: boolean;
+    markAsRead: boolean;
+    senders?: string[];
+  }
+
   export class Database {
-    static createFilter(name: string, init: FilterInitOptions = {}): Filter {
-      const filter: Filter = Object.assign({
-        name,
-        markAsImportant: false,
-        markAsRead: false,
-      }, init);
-
-      return filter;
+    static create(
+      name: string,
+      options: RestrictedPartial<FilterRecord, 'markAsImportant' | 'markAsRead'> = {}
+    ): void {
+      // TODO
     }
 
-    static getFilter(name: string): Filter {
-      return {
-        name: 'News/Promotions',
-        markAsRead: true,
-        markAsImportant: false,
-      };
+    static read(name: string): FilterRecord;
+    static read(name: null): FilterRecord[];
+    static read(name: unknown = null): unknown {
+      if (name === null) {
+        // TODO return all, not with senders
+        return [
+          {
+            name: 'Finances',
+            markAsRead: false,
+            markAsImportant: false,
+          },
+          {
+            name: 'Finances/Bills',
+            markAsRead: false,
+            markAsImportant: true,
+          },
+          {
+            name: 'News',
+            markAsRead: true,
+            markAsImportant: false,
+          },
+          {
+            name: 'News/Promotions',
+            markAsRead: true,
+            markAsImportant: false,
+          },
+          {
+            name: 'News/Marketing',
+            markAsRead: true,
+            markAsImportant: false,
+          },
+        ] as FilterRecord[];
+      } else {
+        // TODO return one, with senders
+        return {
+          name: 'News/Promotions',
+          markAsRead: true,
+          markAsImportant: false,
+          senders: ['mail@veganmasters.nl'],
+        };
+      }
     }
 
-    static getFilters(): Filter[] {
-      return [Database.getFilter('News/Promotions')];
+    static update(name: string, options: Partial<FilterRecord>): void {
+      // TODO
     }
 
-    static updateFilter(filter: Filter): void {
-      return void 0;
-    }
-
-    static deleteFilter(name: string): void {
-      return void 0;
-    }
-
-    static bindSenders(name: string, ...senders: string[]): void {
-      return void 0;
-    }
-
-    static unbindSenders(name: string, ...senders: string[]): void {
-      return void 0;
-    }
-
-    static getSenders(name: string): string[] {
-      return ['mail@veganmasters.nl'];
+    static delete(name: string): void {
+      // TODO
     }
   }
 }

@@ -1,19 +1,15 @@
 namespace GmailAutoArchiver {
-  type Action = GoogleAppsScript.Card_Service.Action;
-  type Card = GoogleAppsScript.Card_Service.Card;
+  export namespace Interface {
+    // 'Shortcut' types.
+    type Action = GoogleAppsScript.Card_Service.Action;
+    type Card = GoogleAppsScript.Card_Service.Card;
 
-  interface HomepageCardSettings {
-    archivers: Archiver[];
-    onAddNewFilterAction: Action;
-  }
+    interface UpdateCardSettings {
+      onConfirm: Action;
+      onCancel: Action;
+    }
 
-  interface UpdateCardSettings {
-    onConfirm: Action;
-    onCancel: Action;
-  }
-
-  export class Interface {
-    static createAddNewFilterCard(options: UpdateCardSettings): Card {
+    export function createAddNewFilterCard(settings: UpdateCardSettings): Card {
       const builder = CardService.newCardBuilder();
 
       // Construct the header.
@@ -44,10 +40,10 @@ namespace GmailAutoArchiver {
       // Construct the footer.
       const footer = CardService.newFixedFooter();
       footer.setPrimaryButton(
-        CardService.newTextButton().setText('Confirm').setOnClickAction(options.onConfirm)
+        CardService.newTextButton().setText('Confirm').setOnClickAction(settings.onConfirm)
       );
       footer.setSecondaryButton(
-        CardService.newTextButton().setText('Cancel').setOnClickAction(options.onCancel)
+        CardService.newTextButton().setText('Cancel').setOnClickAction(settings.onCancel)
       );
 
       // Assemble the card.
@@ -57,7 +53,11 @@ namespace GmailAutoArchiver {
       return builder.build();
     }
 
-    static createHomepageCard(settings: HomepageCardSettings): Card {
+    interface HomepageCardSettings {
+      onAddNewFilterAction: Action;
+    }
+
+    export function createHomepageCard(settings: HomepageCardSettings): Card {
       const builder = CardService.newCardBuilder();
 
       // const description = CardService.newTextParagraph().setText(
@@ -69,11 +69,12 @@ namespace GmailAutoArchiver {
 
       const mainSection = CardService.newCardSection();
 
-      if (settings.archivers.length > 0) {
-        for (const archiver of settings.archivers) {
+      const filters = GmailAutoArchiver.getAll();
+      if (filters.length > 0) {
+        for (const { name } of filters) {
           mainSection.addWidget(
             CardService.newDecoratedText()
-              .setText(archiver.name)
+              .setText(name)
               .setEndIcon(CardService.newIconImage().setIcon(CardService.Icon.OFFER))
           );
         }

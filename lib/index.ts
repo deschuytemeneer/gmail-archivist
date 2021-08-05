@@ -40,7 +40,6 @@ function onAddNewFilter(): GoogleAppsScript.Card_Service.ActionResponse {
  */
 function onHomepage(): GoogleAppsScript.Card_Service.Card {
   return GmailAutoArchiver.Interface.createHomepageCard({
-    archivers: [],
     onAddNewFilterAction: CardService.newAction().setFunctionName(onAddNewFilter.name),
   });
 }
