@@ -4,18 +4,24 @@
   "author": "Kenny Deschuyteneer (kenny.deschuyteneer@gmail.com)",
   "license": "MIT",
   "description": "A Google addon to get control over your gmail inbox.",
+  "scripts": {
+    "test:build": "jest rollup -c rollup/jest.config.js"
+  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/google-apps-script": "^1.0.31",
+    "@types/jest": "^26.0.24",
     "@types/node": "^16.3.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.24.0",
     "eslint-config-prettier": "^8.2.0",
+    "jest": "^27.0.6",
     "prettier": "^2.2.0",
     "recast": "^0.20.4",
     "rollup": "^2.53.1",
+    "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
     "tslib": "^2.3.0"
   }
