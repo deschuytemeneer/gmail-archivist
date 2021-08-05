@@ -8,9 +8,13 @@
     "clean": "shx rm -rf dist/",
     "build": "run-s clean build:rollup",
     "build:rollup": "rollup -c rollup.config.js",
-    "test:build": "jest rollup -c rollup/jest.config.js"
+    "test:build": "jest rollup -c rollup/jest.config.js",
+    "clasp:login": "clasp login",
+    "clasp:push": "clasp push",
+    "deploy": "run-s build clasp:push"
   },
   "devDependencies": {
+    "@google/clasp": "^2.4.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/google-apps-script": "^1.0.31",
