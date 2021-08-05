@@ -1,6 +1,23 @@
 {
-  "timeZone": "America/New_York",
-  "dependencies": {
+  "timeZone": "Europe/Amsterdam",
+  "dependencies": {},
+  "oauthScopes": [
+    "https://mail.google.com/",
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Gmail Auto Archiver",
+      "logoUrl": "https://www.gstatic.com/images/icons/material/system/1x/pets_black_48dp.png"
+    },
+    "gmail": {
+      "homepageTrigger": {
+        "runFunction": "onHomepage",
+        "enabled": true
+      }
+    }
   },
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8"
