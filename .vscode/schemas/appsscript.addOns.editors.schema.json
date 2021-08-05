@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/appsscript.addOns.docs.schema.json",
+  "type": "object",
+  "description": "The resource configuration that is used to define Google Workspace add-on content and behavior within the editors. Google Workspace add-on manifests must have all the components marked as Required if they extend the Editor.",
+  "definitions": {
+    "HomepageTrigger": {
+      "$ref": "./appsscript.addOns.common.schema.json/#/definitions/HomepageTrigger"
+    }
+  },
+  "properties": {
+    "onFileScopeGrantedTrigger": {
+      "type": "object",
+      "description": "Required if your add-on includes behavior specific to the current Editor document, triggered when the user authorizes the drive.file scope.",
+      "properties": {
+        "runFunction": {
+          "type": "string",
+          "description": "The name of the function to run if drive.file scope is granted. If specified, you must implement this function to build and return an array of Card objects for display in the add-on UI."
+        }
+      }
+    },
+    "homepageTrigger": {
+      "$ref": "#/definitions/HomepageTrigger",
+      "description": "The trigger function specification for creating the add-on homepage in the Drive host. This overrides addOns.common.homepageTrigger."
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/appsscript.addOns.common.schema.json",
+  "type": "object",
+  "description": "The manifest configuration for parameters that are common for every host application. Some values defined here are used as a default when specific values for a particular host are omitted.",
+  "definitions": {
+    "HomepageTrigger": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not homepage (non-contextual) cards are enabled for this host application. Defaults to true.",
+          "default": true
+        },
+        "runFunction": {
+          "type": "string",
+          "description": "The name of the function to run this trigger fires. If specified, you must implement this function to build and return an array of one or more Card objects for display as this add-on's homepage in this host application."
+        }
+      },
+      "required": [
+        "runFunction"
+      ]
+    }
+  },
+  "properties": {
+    "homepageTrigger": {
+      "$ref": "#/definitions/HomepageTrigger",
+      "description": "The default trigger function specification for creating the add-on homepage. This specification is used if a host-specific homepage trigger is not defined. If this is omitted as well, a generic homepage card is constructed and used when needed."
+    },
+    "layoutProperties": {
+      "type": "object",
+      "description": "A configuration for the colors used in the add-on toolbar and buttons.",
+      "properties": {
+        "primaryColor": {
+          "type": "string",
+          "description": "The color of toolbar. Defaults to grey (#424242).",
+          "default": "#424242"
+        },
+        "secondaryColor": {
+          "type": "string",
+          "description": "The default color of buttons. Defaults to the primary color (if it is set); otherwise defaults to blue (#2196F3).",
+          "default": "#2196F3"
+        }
+      }
+    },
+    "logoUrl": {
+      "type": "string",
+      "description": "The URL of the image shown in the toolbar."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the add-on shown in the toolbar."
+    },
+    "openLinkUrlPrefixes": {
+      "type": "array",
+      "description": "Required if the add-on displays any outbound links, whether within widgets using an OpenLink or text widget using HTML anchor tags. A list of HTTPS URL prefixes. To protect user data, any link rendered by the add-on must match one of the prefixes in this list.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "universalActions": {
+      "type": "array",
+      "description": "Required if the add-on displays any outbound links, whether within widgets using an OpenLink or text widget using HTML anchor tags. A list of HTTPS URL prefixes. To protect user data, any link rendered by the add-on must match one of the prefixes in this list.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Required for each universal action. The text shown in the UI menu for this action."
+          },
+          "openLink": {
+            "type": "string",
+            "description": "Required for each universal action if runFunction is not present. If provided, the URL that is opened in a tab when the user selects this action."
+          },
+          "runFunction": {
+            "type": "string",
+            "description": "Required for each universal action if openLink is not present. If provided, the name of the Apps Script function that executes when the user selects this action."
+          }
+        },
+        "required": [
+          "label"
+        ]
+      }
+    },
+    "useLocaleFromApp": {
+      "type": "boolean",
+      "description": "If true, add-on event objects passed to action callback functions or trigger functions include the locale and timezone information of the user. Defaults to false.",
+      "default": false
+    }
+  },
+  "required": [
+    "logoUrl",
+    "name"
+  ]
+}
