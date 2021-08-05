@@ -1,8 +1,4 @@
 ---
-ignorePatterns:
-  - 'jest.*.js'
-  - '__fixtures__/'
-
 parser: '@typescript-eslint/parser'
 parserOptions:
   project: './rollup/tsconfig.json'

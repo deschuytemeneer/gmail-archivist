@@ -1,6 +1,8 @@
 {
+  "include": ["src"],
   "compilerOptions": {
-    "lib": ["esnext"],
-    "experimentalDecorators": true
+    "lib": ["ESNext"],
+    "moduleResolution": "node",
+    "target": "ES2015",
   }
 }
