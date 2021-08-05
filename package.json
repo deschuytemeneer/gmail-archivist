@@ -1,9 +1,9 @@
 {
-  "name": "gmail-filter-manager",
+  "name": "gmail-archivist",
   "version": "0.0.1",
   "author": "Kenny Deschuyteneer (kenny.deschuyteneer@gmail.com)",
   "license": "MIT",
-  "description": "A Google addon to get control over your gmail filters.",
+  "description": "A Google addon to get control over your gmail inbox.",
   "devDependencies": {
     "@types/google-apps-script": "^1.0.31",
     "@typescript-eslint/eslint-plugin": "^4.22.0",

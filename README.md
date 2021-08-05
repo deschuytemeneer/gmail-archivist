@@ -1,4 +1,4 @@
-Gmail Filter Manager
+Gmail Archivist
 ---
 
-A Google addon to get control over your gmail filters.
+A Google addon to get control over your gmail inbox.
